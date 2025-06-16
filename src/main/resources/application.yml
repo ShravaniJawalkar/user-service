@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/UserService
+    driver-class-name: org.postgresql.Driver
+    username: ecommerceUser
+    password: user1234
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+server:
+  address: localhost
+  port: 8086
+  servlet:
+    context-path: /user-service
