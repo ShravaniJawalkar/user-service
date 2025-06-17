@@ -1,15 +1,19 @@
 spring:
   application:
     name: user-service
-  datasource:
-    url: jdbc:postgresql://localhost:5432/UserService
-    driver-class-name: org.postgresql.Driver
-    username: ecommerceUser
-    password: user1234
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
+  config:
+      import: configserver:http://localhost:8083/config-server/ # This is the crucial line
+  cloud:
+    config:
+      profile: local # Specifies the profile(s) to fetch from the config server
+      name: user-service # Application name (should match the config file prefix)
+      label: master # Git branch to use
+      fail-fast: true # Fail if config server is not available
+      retry:
+        initial-interval: 1000
+        max-attempts: 6
+        max-interval: 2000
+        multiplier: 1.1
 
 server:
   address: localhost
