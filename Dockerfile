@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/user-service-0.0.1-SNAPSHOT.jar user-service-0.0.1-SNAPSHOT.jar
 
 # Expose the application port
-EXPOSE 8080
+EXPOSE 8086
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "user-service-0.0.1-SNAPSHOT.jar"]

@@ -2,15 +2,15 @@ version: '3.8'
 
 services:
   user-service:
-    image: user-microservice:latest
+    image: user-service:latest
     container_name: user-service
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080" # Map port 8080 of the container to port 8080 on the host
+      - "8086:8086" # Map port 8080 of the container to port 8080 on the host
     environment:
-      SPRING_PROFILES_ACTIVE: dev # Use Spring's 'dev' profile for development
+      SPRING_PROFILES_ACTIVE: local # Use Spring's 'dev' profile for development
     volumes:
       - ./logs:/app/logs # Optionally map a logs folder for debugging
     restart: always      # Automatically restart if the container crashes

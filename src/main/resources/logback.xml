@@ -10,9 +10,7 @@
         <queueSize>500</queueSize>
     </appender>
     <root level="info">
-        <springProfile name="local">
             <appender-ref ref="ASYNC"/>
-        </springProfile>
     </root>
     <logger name="org.example.userservice.controller" level="WARN" additivity="false">
         <appender-ref ref="ASYNC"/>
