@@ -1,11 +1,13 @@
 package org.example.userservice.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.userservice.dao.UserLoginRequest;
 import org.example.userservice.dao.UserRegistrationRequest;
 import org.example.userservice.dao.UserResponse;
 import org.example.userservice.dao.Users;
 import org.example.userservice.repository.UserRepository;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class UsersService {
     @Autowired
@@ -24,6 +27,8 @@ public class UsersService {
     @Transactional
     public ResponseEntity<UserResponse> registerUser(UserRegistrationRequest request) {
         // Validate the request
+        log.info("Registering user {}", request);
+        MDC.put("username", request.getUsername());
         Users user = new Users();
         user.setUsername(request.getUsername());
         user.setFullName(request.getFullName());
@@ -38,10 +43,13 @@ public class UsersService {
         UserResponse response = new UserResponse();
         response.setUserId(user.getId());
         response.setUserName(user.getUsername());
+        MDC.clear();
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     public ResponseEntity<UserResponse> getUserById(Long id) {
+        log.info("Retrieving user by id ");
+        MDC.put("userId", String.valueOf(id));
         Users user = userRepository.findById(id).orElse(null);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,11 +57,14 @@ public class UsersService {
         UserResponse response = new UserResponse();
         response.setUserId(user.getId());
         response.setUserName(user.getUsername());
+        MDC.clear();
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @Transactional
     public ResponseEntity<UserResponse> loginUser(UserLoginRequest request) {
+        log.info("User login page");
+        MDC.put("username", request.getUsername());
         Users user = userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword());
         UserResponse response = null;
         if (user == null) {
@@ -62,10 +73,12 @@ public class UsersService {
         response = new UserResponse();
         response.setUserId(user.getId());
         response.setUserName(user.getUsername());
+        MDC.clear();
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     public ResponseEntity<List<UserResponse>> getAllUsers(int page, int size) {
+        log.info("Retrieving all users");
         PageRequest pageRequest = PageRequest.of(page, size);
         List<Users> users = userRepository.findAll(pageRequest).getContent();
         if (users.isEmpty()) {

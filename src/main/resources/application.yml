@@ -8,7 +8,7 @@ spring:
       profile: local # Specifies the profile(s) to fetch from the config server
       name: user-service # Application name (should match the config file prefix)
       label: master # Git branch to use
-      fail-fast: true # Fail if config server is not available
+      fail-fast: false # Fail if config server is not available
       retry:
         initial-interval: 1000
         max-attempts: 6

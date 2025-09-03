@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>user-service</name>
     <description>user-service</description>
+    <packaging>jar</packaging>
     <url/>
     <licenses>
         <license/>
