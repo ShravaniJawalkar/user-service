@@ -2,7 +2,7 @@ spring:
   application:
     name: user-service
   config:
-      import: configserver:http://localhost:8083/config-server/ # This is the crucial line
+      import: configserver:http://host.docker.internal:8083/config-server/ # This is the crucial line
   cloud:
     config:
       profile: local # Specifies the profile(s) to fetch from the config server
