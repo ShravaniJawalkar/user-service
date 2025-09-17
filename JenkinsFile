@@ -8,17 +8,19 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                bat 'mvnw.cmd clean package -Dspring.profiles.active=test'
-            }
-        }
-
-        stage('Test') {
+    stage('Test') {
             steps {
                 bat 'mvnw.cmd test -Dspring.profiles.active=test'
             }
+    }
+
+    stage('Build') {
+            steps {
+                bat 'mvnw.cmd clean package -DskipTests=true'
+            }
         }
+
+
 
         stage('Deploy') {
             steps {
